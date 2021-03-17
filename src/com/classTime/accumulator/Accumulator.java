@@ -2,7 +2,7 @@ package com.classTime.accumulator;
 
 public class Accumulator {
 
-  int sum;
+  private int sum;
 
   public Accumulator() {
     sum = 0;
@@ -14,6 +14,7 @@ public class Accumulator {
 
   public void display() {
     System.out.println("누적값 : " + sum);
+    System.out.println();
   }
 
 }
