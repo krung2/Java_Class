@@ -2,8 +2,8 @@ package com.classTime.SmallCalc;
 
 public class SmallCalc {
 
-  int[] values;
-  int arraySize;
+  private int[] values;
+  private int arraySize;
 
   public SmallCalc (int arraySize) {
     this.values = new int[arraySize];
