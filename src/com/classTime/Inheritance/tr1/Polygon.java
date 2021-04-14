@@ -1,14 +1,10 @@
 package com.classTime.Inheritance.tr1;
 
-public class Polygon {
+public abstract class Polygon {
 
-  public double getArea() {
-    return 0;
-  }
+  public abstract double getArea();
 
-  public String getName() {
-    return "다각형";
-  }
+  public abstract String getName();
 
   public void printArea() {
     System.out.println(getName() + "의 면적 : " + getArea());
