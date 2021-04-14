@@ -1,23 +1,33 @@
 package com.classTime.array;
 
-public class InsertSort extends Sort {
+public class SelectionSort extends Sort {
 
   @Override
   public void sort() {
-    for (int i = 1;i < array.length; i ++) {
-      int key = array[i];
-      int j;
+    for (int i = 0; i < array.length; i ++) {
+      int minIndex = findMinimumIndex(i);
 
-      for (j = i - 1; j >= 0 && array[j] > key;j --) {
-        array[j + 1] = array[j];
+      if (i != minIndex) {
+        swap (i, minIndex);
       }
-
-      array[j + 1] = key;
     }
   }
 
+  private int findMinimumIndex(int index) {
+    int result = index;
+
+    for (int i = index + 1; i < array.length; i ++) {
+
+      if (array[result] > array[i]) {
+        result = i;
+      }
+    }
+
+    return result;
+  }
+
   public static void main(String[] args) {
-    Sort sort = new InsertSort();
+    Sort sort = new SelectionSort();
 
     sort.fillValues();
 
