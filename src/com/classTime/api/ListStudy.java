@@ -26,6 +26,7 @@ public class ListStudy {
     System.out.println(" --------- ");
 
     list.add(2, "데이터베이스");
+    list.remove(3);
     printAll(list);
   }
 }
