@@ -39,6 +39,21 @@ public class FileStudy {
       Date date = new Date(lastModified);
       System.out.println("lastModified : " + date.toString());
 
+      String parent = hello.getParent();
+      System.out.println("getParent : " + parent + "\n");
+
+      System.out.println("---------- list ----------");
+
+      dir = new File(baseURL);
+      File[] list = dir.listFiles();
+
+      for (File file1: list) {
+        System.out.println(file1.getName());
+      }
+
+      File renamed = new File(baseURL + "hello");
+      hello.renameTo(renamed);
+
     } catch (Exception e) {
 
       e.printStackTrace();
