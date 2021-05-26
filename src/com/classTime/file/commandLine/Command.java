@@ -22,6 +22,7 @@ public class Command {
   }
 
   public void cd (String path) throws Exception{
+
     if (path.equals("..")) {
 
       System.out.println(this.dirpath.substring((this.dirpath.lastIndexOf("/"))));
@@ -33,9 +34,24 @@ public class Command {
     File dir = new File(newPath);
 
     if (dir.isDirectory()) {
+
       this.dirpath = newPath;
     } else {
+
       System.out.println("없는 경로입니다");
+    }
+  }
+
+  public void mkdir (String path) throws Exception {
+
+    File dir = new File(this.dirpath + path);
+
+    if (dir.exists()) {
+
+      System.out.println("이미 같은 이름의 폴더가 있습니다");
+    } else {
+
+      dir.mkdir();
     }
   }
 
@@ -59,6 +75,9 @@ public class Command {
             break;
           case "cd":
             commandLine.cd(commandSplit[1]);
+            break;
+          case "mkdir":
+            commandLine.mkdir(commandSplit[1]);
             break;
           default :
             break;
