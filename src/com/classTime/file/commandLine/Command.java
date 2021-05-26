@@ -1,6 +1,7 @@
 package com.classTime.file.commandLine;
 
 import java.io.File;
+import java.rmi.server.ExportException;
 import java.util.Scanner;
 
 public class Command {
@@ -68,6 +69,32 @@ public class Command {
     }
   }
 
+  public void touch (String fileName) throws Exception {
+
+    File file = new File(this.dirpath + fileName);
+
+    if (file.exists()) {
+
+      System.out.println("이미 있는 파일입니다");
+    } else {
+
+      file.createNewFile();
+    }
+  }
+
+  public void rm (String fileName) throws Exception {
+
+    File file = new File(this.dirpath + fileName);
+
+    if (file.exists()) {
+
+      file.delete();
+    } else {
+
+      System.out.println("없는 파일입니다");
+    }
+  }
+
   public static void main(String[] args) {
 
     Command commandLine = new Command();
@@ -94,6 +121,12 @@ public class Command {
             break;
           case "rmdir":
             commandLine.rmdir(commandSplit[1]);
+            break;
+          case "touch":
+            commandLine.touch(commandSplit[1]);
+            break;
+          case "rm":
+            commandLine.rm(commandSplit[1]);
             break;
           default :
             break;
