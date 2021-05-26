@@ -55,6 +55,19 @@ public class Command {
     }
   }
 
+  public void rmdir (String path) throws Exception {
+
+    File dir = new File(this.dirpath + path);
+
+    if (dir.exists()) {
+
+      dir.delete();
+    } else {
+
+      System.out.println("없는 폴더입니다");
+    }
+  }
+
   public static void main(String[] args) {
 
     Command commandLine = new Command();
@@ -78,6 +91,9 @@ public class Command {
             break;
           case "mkdir":
             commandLine.mkdir(commandSplit[1]);
+            break;
+          case "rmdir":
+            commandLine.rmdir(commandSplit[1]);
             break;
           default :
             break;
