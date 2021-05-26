@@ -18,7 +18,7 @@ public class Command {
     File[] files = dir.listFiles();
 
     for (File file: files) {
-      System.out.println(file);
+      System.out.println(file.getName());
     }
   }
 
@@ -26,7 +26,6 @@ public class Command {
 
     if (path.equals("..")) {
 
-      System.out.println(this.dirpath.substring((this.dirpath.lastIndexOf("/"))));
       this.dirpath = this.dirpath.substring(0, this.dirpath.lastIndexOf("/"));
       return;
     }
