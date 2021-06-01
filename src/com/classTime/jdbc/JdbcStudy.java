@@ -80,8 +80,7 @@ public class JdbcStudy {
 
   public List<NameCard> getList() throws Exception {
 
-    Class.forName("org.mariadb.jdbc.Driver");
-    Connection con = DriverManager.getConnection("jdbc:mariadb://211.53.209.159/dgsw_java", "dgsw_student", "1234");
+    Connection con = this.getConnection();
 
     String sql = "SELECT * FROM phone_book";
     PreparedStatement pstmt = con.prepareStatement(sql);
@@ -100,6 +99,68 @@ public class JdbcStudy {
     con.close();
 
     return cardList;
+  }
+
+  public void insert(String name, String phoneNumber, String address) throws Exception {
+
+    Connection con = this.getConnection();
+
+    StringBuilder sql = new StringBuilder();
+
+    sql.append("INSERT INTO phone_book ");
+    sql.append(" (name, phone_number, address) ");
+    sql.append("VALUES ");
+    sql.append(" (?, ?, ?) ");
+
+    PreparedStatement pstmt = con.prepareStatement(sql.toString());
+    pstmt.setString(1, name);
+    pstmt.setString(2, phoneNumber);
+    pstmt.setString(3, address);
+
+    pstmt.executeUpdate();
+
+    pstmt.close();
+    con.close();
+  }
+
+  public void update (int id, String name, String phoneNumber, String address) throws Exception {
+
+    Connection con = this.getConnection();
+
+    StringBuilder sql = new StringBuilder();
+    sql.append("UPDATE phone_book SET ");
+    sql.append(" name = ?, ");
+    sql.append(" phone_number = ?, ");
+    sql.append(" address = ? ");
+    sql.append(" WHERE id = ? ");
+
+    PreparedStatement pstmt = con.prepareStatement(sql.toString());
+    pstmt.setString(1, name);
+    pstmt.setString(2, phoneNumber);
+    pstmt.setString(3, address);
+    pstmt.setInt(4, id);
+
+    pstmt.executeUpdate();
+
+    pstmt.close();
+    con.close();
+  }
+
+  public void delete (int id) throws Exception {
+
+    Connection con = this.getConnection();
+
+    StringBuilder sql = new StringBuilder();
+    sql.append("DELETE FROM phone_book ");
+    sql.append(" WHERE id=?");
+
+    PreparedStatement pstmt = con.prepareStatement(sql.toString());
+    pstmt.setInt(1, id);
+
+    pstmt.executeUpdate();
+
+    pstmt.close();
+    con.close();
   }
 
   public static void main(String[] args) {
@@ -147,6 +208,9 @@ public class JdbcStudy {
         );
       }
 
+//      jdbcStudy.insert("신중빈", "010-1234-5678", "투르크메니스탄");
+//      jdbcStudy.update(55, "윤석현", "010-123-4533", "키르기스스탄");
+      jdbcStudy.delete(51);
     } catch (Exception e) {
       e.printStackTrace();
     }
