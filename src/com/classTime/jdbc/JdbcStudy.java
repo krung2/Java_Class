@@ -83,7 +83,7 @@ public class JdbcStudy {
     PreparedStatement pstmt = con.prepareStatement(sql);
     ResultSet rs = pstmt.executeQuery();
 
-    List<NameCard> cardList = new ArrayList<>();
+    List<NameCard> cardList = new ArrayList<NameCard>();
     while (rs.next()){
 
       NameCard nameCard = new NameCard();
