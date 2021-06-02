@@ -58,11 +58,11 @@ public class FilePhoneBook implements PhoneBook {
 
     List<NameCard> cardList  = this.getList();
 
-    for (NameCard card : cardList) {
+    for (NameCard nameCard : cardList) {
 
-      if (card.id == id) {
+      if (nameCard.id == id) {
 
-        return card;
+        return nameCard;
       }
     }
 
@@ -75,11 +75,11 @@ public class FilePhoneBook implements PhoneBook {
 
     List<NameCard> cardList  = this.getList();
 
-    for (NameCard card : cardList) {
+    for (NameCard nameCard : cardList) {
 
-      if (card.name.equals(name)) {
+      if (nameCard.name.equals(name)) {
 
-        return card;
+        return nameCard;
       }
     }
 
@@ -123,14 +123,7 @@ public class FilePhoneBook implements PhoneBook {
       }
     }
 
-    for (NameCard nameCard: cardList) {
-
-      this.addCard(
-              nameCard.getName(),
-              nameCard.getPhoneNumber(),
-              nameCard.getAddress()
-      );
-    }
+    addNameCard(cardList);
 
     return false;
   }
@@ -153,15 +146,7 @@ public class FilePhoneBook implements PhoneBook {
       }
     }
 
-    for (NameCard nameCard: cardList) {
-
-      this.addCard(
-              nameCard.getName(),
-              nameCard.getPhoneNumber(),
-              nameCard.getAddress()
-      );
-    }
-
+    addNameCard(cardList);
   }
 
   @Override
@@ -170,5 +155,17 @@ public class FilePhoneBook implements PhoneBook {
     List<NameCard> cardList = this.getList();
 
     return cardList.size();
+  }
+
+  private void addNameCard (List<NameCard> cardList) {
+
+    for (NameCard nameCard: cardList) {
+
+      this.addCard(
+              nameCard.getName(),
+              nameCard.getPhoneNumber(),
+              nameCard.getAddress()
+      );
+    }
   }
 }
