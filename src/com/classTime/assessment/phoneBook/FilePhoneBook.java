@@ -10,6 +10,9 @@ public class FilePhoneBook implements PhoneBook {
   public static final String FILE_NAME = "phoneBook.dat";
 
   private File file;
+  
+  // 이 문자열은 무조건 바꿔주세요!!
+  private String splitMsg = "     ";
 
   public FilePhoneBook() {
     file = new File(FILE_PATH + FILE_NAME);
@@ -28,7 +31,7 @@ public class FilePhoneBook implements PhoneBook {
       int cnt = 1;
       while ((line = br.readLine()) != null) {
 
-        String[] cardInfo = line.split("     ");
+        String[] cardInfo = line.split(splitMsg);
 
         NameCard nameCard = new NameCard();
 
@@ -94,7 +97,7 @@ public class FilePhoneBook implements PhoneBook {
 
       BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
 
-      bw.write(name + "     " + phoneNumber + "     " + address +"\n");
+      bw.write(name + splitMsg + phoneNumber + splitMsg + address +"\n");
       bw.close();
 
       return 1;
