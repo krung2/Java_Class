@@ -14,8 +14,8 @@ public class DBPhoneBook implements PhoneBook {
   private Connection getConnection() throws Exception {
 
     Class.forName("org.mariadb.jdbc.Driver");
-    return DriverManager.getConnection("jdbc:mysql://localhost/java", "root", "1234");
-//    return DriverManager.getConnection("jdbc:mariadb://211.53.209.159/dgsw_java", "dgsw_student", "1234");
+//    return DriverManager.getConnection("jdbc:mysql://localhost/java", "root", "1234");
+    return DriverManager.getConnection("jdbc:mariadb://211.53.209.159/dgsw_java", "dgsw_student", "1234");
   }
 
   private NameCard setNameCard (ResultSet rs) throws Exception{
@@ -236,8 +236,7 @@ public class DBPhoneBook implements PhoneBook {
   @Override
   public int size() {
 
-    List<NameCard> cardList = this.getList();
-    return cardList.size();
+    return this.getList().size();
   }
 
 }
