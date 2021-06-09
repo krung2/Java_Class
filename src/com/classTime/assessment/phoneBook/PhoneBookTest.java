@@ -37,10 +37,10 @@ public class PhoneBookTest {
     System.out.println("removeCard() --------------------");
     System.out.println("size : " + phoneBook.size());
 
-//    // 두번째로 등록된 연락처의 정보를 임의로 변경하세요.
-//    phoneBook.updateCard(cards.get(1).getId(), "유산슬", "010-5555-6666", "합정역 5번 출구");
-//    System.out.println("updateCard() --------------------");
-//    nameCard = phoneBook.getCard(cards.get(1).getId());
-//    System.out.println(nameCard.toString());
+    // 두번째로 등록된 연락처의 정보를 임의로 변경하세요.
+    phoneBook.updateCard(cards.get(1).getId(), "유산슬", "010-5555-6666", "합정역 5번 출구");
+    System.out.println("updateCard() --------------------");
+    nameCard = phoneBook.getCard(cards.get(1).getId());
+    System.out.println(nameCard.toString());
   }
 }

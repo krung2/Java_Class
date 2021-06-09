@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DBPhoneBook implements PhoneBook {
@@ -171,17 +172,72 @@ public class DBPhoneBook implements PhoneBook {
 
   @Override
   public boolean removeCard(int id) {
+
+    try {
+
+      Connection con = this.getConnection();
+
+      StringBuilder sql = new StringBuilder();
+
+      sql.append(" DELETE FROM phone_book ");
+      sql.append(" WHERE ");
+      sql.append(" id = ? ");
+
+      PreparedStatement pstmt = con.prepareStatement(sql.toString());
+      pstmt.setInt(1, id);
+
+      pstmt.executeUpdate();
+
+      pstmt.close();
+      con.close();
+
+      return true;
+
+    } catch (Exception e) {
+
+      e.printStackTrace();
+    }
+
     return false;
   }
 
   @Override
   public void updateCard(int id, String name, String phoneNumber, String address) {
 
+    try {
+
+      Connection con = this.getConnection();
+
+      StringBuilder sql = new StringBuilder();
+      sql.append(" UPDATE phone_book ");
+      sql.append(" SET ");
+      sql.append(" name = ?, ");
+      sql.append(" phone_number = ?, ");
+      sql.append(" address = ? ");
+      sql.append(" WHERE id = ? ");
+
+      PreparedStatement pstmt = con.prepareStatement(sql.toString());
+      pstmt.setString(1, name);
+      pstmt.setString(2, phoneNumber);
+      pstmt.setString(3, address);
+      pstmt.setInt(4, id);
+
+      pstmt.executeUpdate();
+
+      pstmt.close();
+      con.close();
+
+    } catch (Exception e) {
+
+      e.printStackTrace();
+    }
   }
 
   @Override
   public int size() {
-    return 0;
+
+    List<NameCard> cardList = this.getList();
+    return cardList.size();
   }
 
 }
