@@ -55,6 +55,8 @@ public class DBPhoneBook implements PhoneBook {
       }
 
       rs.close();
+      pstmt.close();
+      con.close();
 
       return cardList;
     } catch (Exception e) {
@@ -67,11 +69,69 @@ public class DBPhoneBook implements PhoneBook {
 
   @Override
   public NameCard getCard(int id) {
+
+    try {
+
+      Connection con = this.getConnection();
+
+      String sql = "SELECT * FROM phone_book WHERE id = ?";
+      PreparedStatement pstmt = con.prepareStatement(sql);
+      pstmt.setInt(1, id);
+
+      ResultSet rs = pstmt.executeQuery();
+
+      NameCard nameCard = null;
+
+      if (rs.next()) {
+
+        nameCard = this.setNameCard(rs);
+      }
+
+      rs.close();
+      pstmt.close();
+      con.close();
+
+      return  nameCard;
+
+    } catch (Exception e) {
+
+      e.printStackTrace();
+    }
+
     return null;
   }
 
   @Override
   public NameCard getCard(String name) {
+
+    try {
+
+      Connection con = this.getConnection();
+
+      String sql = "SELECT * FROM phone_book WHERE name = ?";
+      PreparedStatement pstmt = con.prepareStatement(sql);
+      pstmt.setString(1, name);
+
+      ResultSet rs = pstmt.executeQuery();
+
+      NameCard nameCard = null;
+
+      if (rs.next()) {
+
+        nameCard = this.setNameCard(rs);
+      }
+
+      rs.close();
+      pstmt.close();
+      con.close();
+
+      return  nameCard;
+
+    } catch (Exception e) {
+
+      e.printStackTrace();
+    }
+
     return null;
   }
 

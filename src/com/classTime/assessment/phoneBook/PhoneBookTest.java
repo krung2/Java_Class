@@ -23,20 +23,20 @@ public class PhoneBookTest {
     }
 
 //     getName(int) 메소드를 이용해서 연락처 하나를 읽어와 상세 정보를 출력하세요.
-//    nameCard = phoneBook.getCard(cards.get(1).getId());
-//    System.out.println("getCard(int) --------------------");
-//    System.out.println(nameCard.toString());
-//
-//    // getName(String) 메소드를 이용해서 연락처 하나를 읽어와 상세 정보를 출력하세요.
-//    nameCard = phoneBook.getCard(cards.get(2).getName());
-//    System.out.println("getCard(String) --------------------");
-//    System.out.println(nameCard.toString());
-//
-//    // 세번째로 등록된 연락처를 삭제하세요.
-//    phoneBook.removeCard(cards.get(2).getId());
-//    System.out.println("removeCard() --------------------");
-//    System.out.println("size : " + phoneBook.size());
-//
+    nameCard = phoneBook.getCard(cards.get(1).getId());
+    System.out.println("getCard(int) --------------------");
+    System.out.println(nameCard.toString());
+
+    // getName(String) 메소드를 이용해서 연락처 하나를 읽어와 상세 정보를 출력하세요.
+    nameCard = phoneBook.getCard(cards.get(2).getName());
+    System.out.println("getCard(String) --------------------");
+    System.out.println(nameCard.toString());
+
+    // 세번째로 등록된 연락처를 삭제하세요.
+    phoneBook.removeCard(cards.get(2).getId());
+    System.out.println("removeCard() --------------------");
+    System.out.println("size : " + phoneBook.size());
+
 //    // 두번째로 등록된 연락처의 정보를 임의로 변경하세요.
 //    phoneBook.updateCard(cards.get(1).getId(), "유산슬", "010-5555-6666", "합정역 5번 출구");
 //    System.out.println("updateCard() --------------------");
