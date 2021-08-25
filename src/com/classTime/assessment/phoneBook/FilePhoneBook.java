@@ -6,7 +6,7 @@ import java.util.List;
 
 public class FilePhoneBook implements PhoneBook {
 
-  private static final String FILE_PATH = "/Users/krung2/Documents/Github/JAVA_Class/src/com/classTime/assessment/phoneBook";
+  private static final String FILE_PATH = "/Users/krung2/Documents/Github/JAVA_Class/src/com/classTime/assessment/phoneBook/";
   public static final String FILE_NAME = "phoneBook.dat";
 
   private File file;
