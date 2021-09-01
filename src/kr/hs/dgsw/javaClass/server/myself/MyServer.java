@@ -33,7 +33,6 @@ public class MyServer {
     try {
       while (true) {
 
-
         InputStream is = socket.getInputStream();
         OutputStream os = socket.getOutputStream();
 
