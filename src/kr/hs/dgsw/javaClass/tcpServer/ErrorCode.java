@@ -1,15 +1,14 @@
 package kr.hs.dgsw.javaClass.tcpServer;
 
 public enum ErrorCode {
-	PORT_ALREADY_OCCUPIED("1001", "Port啊 捞固 荤侩吝涝聪促."),
-	SERVER_SOCKET_FAIL("1002", "辑滚 家南 坷幅 惯积"),
-	STREAM_CREATION_FAIL("1003", "Input/output stream 积己 角菩"),
-	MESSAGE_SENDING_FAIL("1004", "皋矫瘤 价脚 角菩"),
-	SERVER_SOCKET_CHANNEL_FAIL("1005", "辑滚 家南 盲澄 坷幅 惯积"),
-	SERVER_SOCKET_CLOSE_FAIL("2001", "辑滚 家南 close 角菩"),
-	SERVER_SOCKET_CHANNEL_CLOSE_FAIL("2002", "辑滚 家南 close 角菩"),
+	PORT_ALREADY_OCCUPIED("1001", "Port臧� 鞚措 靷毄欷戩瀰雼堧嫟."),
+	SERVER_SOCKET_FAIL("1002", "靹滊矂 靻岇紦 鞓る 氚滌儩"),
+	STREAM_CREATION_FAIL("1003", "Input/output stream 靸濎劚 鞁ろ尐"),
+	MESSAGE_SENDING_FAIL("1004", "氅旍嫓歆� 靻§嫚 鞁ろ尐"),
+	SERVER_SOCKET_CHANNEL_FAIL("1005", "靹滊矂 靻岇紦 毂勲剱 鞓る 氚滌儩"),
+	SERVER_SOCKET_CLOSE_FAIL("2001", "靹滊矂 靻岇紦 close 鞁ろ尐"),
+	SERVER_SOCKET_CHANNEL_CLOSE_FAIL("2002", "靹滊矂 靻岇紦 close 鞁ろ尐"),
 	COMMON_ERROR("9999");
-	
 	
 	private String code;
 	

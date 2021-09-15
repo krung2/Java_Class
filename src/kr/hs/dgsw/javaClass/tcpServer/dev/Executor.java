@@ -28,8 +28,7 @@ public class Executor {
 			server.setSessionsCallback(sessionsCallback);
 			
 			server.start(3000);
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
