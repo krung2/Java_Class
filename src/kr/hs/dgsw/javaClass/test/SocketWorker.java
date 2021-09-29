@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public abstract class SocketWorker {
 
@@ -44,6 +45,15 @@ public abstract class SocketWorker {
     }
   }
 
+  public String sendMessage(ChattingCommand chattingCommand) throws IOException {
+    return chattingCommand + "0000";
+  }
+
+  public String sendMessage(ChattingCommand chattingCommand, String payload) throws IOException {
+    return chattingCommand + String.format("%04d", payload.getBytes(StandardCharsets.UTF_8).length) + payload;
+  }
+
+
   private class Listener implements Runnable {
 
     @Override
@@ -57,7 +67,7 @@ public abstract class SocketWorker {
         while (true) {
 
           length = is.read(buffer);
-          if (length == -1) {
+          if (length < 0) {
             disconnect();
             break;
           }
