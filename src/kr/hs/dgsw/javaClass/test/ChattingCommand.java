@@ -10,6 +10,7 @@ public enum ChattingCommand {
   SM,
   SR,
   DC,
+  WD,
   WR,
   WA,
 }

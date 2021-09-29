@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class SocketWorker {
 
@@ -53,6 +55,12 @@ public abstract class SocketWorker {
     return chattingCommand + String.format("%04d", payload.getBytes(StandardCharsets.UTF_8).length) + payload;
   }
 
+  protected List<String> getUserInfo (String idWithName) {
+    List<String> list = new ArrayList<>();
+    list.add(idWithName.substring(0, 4));
+    list.add(idWithName.substring(4));
+    return list;
+  }
 
   private class Listener implements Runnable {
 

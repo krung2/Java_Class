@@ -3,6 +3,7 @@ package kr.hs.dgsw.javaClass.test;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,9 +33,33 @@ public class ChattingClient extends SocketWorker {
     while (true) {
       String line = scanner.nextLine();
 
-      if ("quit".equals(line)) break;
+      if (line.startsWith("/")) {
+        List<String> message = List.of(line.split(" "));
 
-      sendMessage(ChattingCommand.GM, line);
+        switch (message.get(0)) {
+          case "/귓속말":
+            List<String> messages = new ArrayList<>();
+            for (int i = 2;i < message.size();i ++) {
+              messages.add(message.get(i));
+            }
+            sendMessage(ChattingCommand.SM, message.get(1) + " " + String.join(" ", messages));
+            break;
+
+          case "/추방":
+            sendMessage(ChattingCommand.WD, message.get(1));
+            break;
+
+          default:
+            System.out.println("없는 명령어입니다 다시 시도해주세요");
+            break;
+        }
+
+      } else {
+
+        if (line == "quit") break;
+
+        sendMessage(ChattingCommand.GM, line);
+      }
     }
 
     scanner.close();
@@ -61,17 +86,42 @@ public class ChattingClient extends SocketWorker {
       case GR:
         List<String> userInfo = getUserInfo(message.getReceiveMessage());
         String user = userMap.get(userInfo.get(0));
-        System.out.println(user + " :" +userInfo.get(1));
+        System.out.println(user + " :" + userInfo.get(1));
         break;
 
       case JR:
         saveUserInfo(message.getReceiveMessage());
         System.out.println(message.getReceiveMessage() + "님이 접속하였습니다");
         break;
+
       case DR:
         System.out.println("중복된 아이디입니다");
         disconnect();
+
         return;
+
+      case SR:
+        List<String> whisperUserInfo = getUserInfo(message.getReceiveMessage());
+        String whisperUser = userMap.get(whisperUserInfo.get(0));
+        System.out.println("귓속말) " + whisperUserInfo.get(0) + " " + whisperUser + " " +
+                ":" + whisperUserInfo.get(1));
+        break;
+
+      case DC:
+        String quitUser = userMap.get(message.getReceiveMessage());
+        System.out.println(message.getReceiveMessage() + " " + quitUser + "가 퇴실했습니다");
+        break;
+
+      case WR:
+        System.out.println("추방당했습니다");
+        disconnect();
+        return;
+
+        case WA:
+        String kickeduser = userMap.get(message.getReceiveMessage());
+        System.out.println(message.getReceiveMessage() + " " + kickeduser + "가 추방당했습니다");
+        break;
+
       default:
         break;
     }
@@ -84,12 +134,6 @@ public class ChattingClient extends SocketWorker {
     return "";
   }
 
-  private List<String> getUserInfo (String idWithName) {
-    List<String> list = new ArrayList<>();
-    list.add(idWithName.substring(0, 4));
-    list.add(idWithName.substring(4));
-    return list;
-  }
 
   private void saveUserInfo (String idName) {
     userMap.put(idName.substring(0, 4), idName.substring(4));

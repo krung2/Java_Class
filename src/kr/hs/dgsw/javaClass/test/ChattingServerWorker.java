@@ -34,25 +34,76 @@ public class ChattingServerWorker extends SocketWorker {
         String sendMessage = sendMessage(ChattingCommand.GR, this.id + " " + message.getReceiveMessage());
         sendMessageToEveryOne(sendMessage);
         break;
+
+      case SM:
+        List<String> userInfo = getUserInfo(message.getReceiveMessage());
+        String sendWhisperMessage = sendMessage(ChattingCommand.SR, this.id + " " + userInfo.get(1));
+        sendMessageToOne(userInfo.get(0), sendWhisperMessage);
+        break;
+
+      case WD:
+        if (this.id != userList.get(0).id) break;
+        kickUser(message.getReceiveMessage());
+
+      default:
+        break;
     }
   }
 
   public void sendMessageToEveryOne (String message) throws IOException {
     for (ChattingServerWorker user: userList) {
+      if (user.id == null) continue;
       if (user.id.equals(this.id)) continue;
       user.socket.getOutputStream().write(message.getBytes(StandardCharsets.UTF_8));
     }
   }
 
+  private void sendMessageToOne (String userId, String message) throws IOException {
+    for (ChattingServerWorker user: userList) {
+      if (user.id.equals(userId)) {
+        user.socket.getOutputStream().write(message.getBytes(StandardCharsets.UTF_8));
+        break;
+      }
+    }
+  }
+
+  private void kickUser (String userId) throws IOException {
+    ChattingServerWorker kickUser = null;
+    for (ChattingServerWorker user: userList) {
+      if (user.id.equals(userId)) {
+        user.socket.getOutputStream().write(
+                sendMessage(ChattingCommand.WR)
+                        .getBytes(StandardCharsets.UTF_8)
+        );
+        kickUser = user;
+      } else {
+        user.socket.getOutputStream().write(
+                sendMessage(ChattingCommand.WA, userId)
+                        .getBytes(StandardCharsets.UTF_8)
+        );
+      }
+    }
+    disconnectToObject(kickUser);
+  }
+
   @Override
   public void disconnect() throws IOException {
+    sendMessageToEveryOne(sendMessage(ChattingCommand.DC, this.id));
 
     if (is != null) is.close();
     if (os != null) os.close();
     if (socket != null) {
       socket.close();
-      sendMessageToEveryOne(sendMessage(ChattingCommand.DC, this.id));
       userList.remove(this);
+    }
+  }
+
+  private void disconnectToObject(ChattingServerWorker kickUser) throws IOException {
+    if (kickUser.is != null) is.close();
+    if (kickUser.os != null) os.close();
+    if (kickUser.socket != null) {
+      kickUser.socket.close();
+      userList.remove(kickUser);
     }
   }
 
@@ -76,10 +127,7 @@ public class ChattingServerWorker extends SocketWorker {
       userNameList.add(idName);
       userNameList.remove(null);
 
-      String sendingMessage = sendMessage(ChattingCommand.UR, userNameList.toString()
-              .replace("[", "")
-              .replace("]", "")
-              .replace(", ", ","));
+      String sendingMessage = sendMessage(ChattingCommand.UR, String.join(",", userNameList).replace("null,", "").replace("null", ""));
       this.os.write(sendingMessage.getBytes(StandardCharsets.UTF_8));
       sendMessageToEveryOne(sendMessage(ChattingCommand.JR, this.idName));
     } catch (Exception e) {
