@@ -1,9 +1,7 @@
 package kr.hs.dgsw.javaClass.test;
 
-
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,6 +73,7 @@ public class ChattingClient extends SocketWorker {
     }
 
     Message message = new Message(buffer, length);
+    System.out.println(message.getCommand().toString() + String.format("%4d", message.getPayloadLength()) + message.getReceiveMessage());
 
     switch (message.getCommand()) {
       case UR:
@@ -109,6 +108,7 @@ public class ChattingClient extends SocketWorker {
 
       case DC:
         String quitUser = userMap.get(message.getReceiveMessage());
+        userMap.remove(message.getReceiveMessage());
         System.out.println(message.getReceiveMessage() + " " + quitUser + "가 퇴실했습니다");
         break;
 
@@ -119,6 +119,7 @@ public class ChattingClient extends SocketWorker {
 
         case WA:
         String kickeduser = userMap.get(message.getReceiveMessage());
+        userMap.remove(message.getReceiveMessage());
         System.out.println(message.getReceiveMessage() + " " + kickeduser + "가 추방당했습니다");
         break;
 
@@ -144,7 +145,7 @@ public class ChattingClient extends SocketWorker {
     try {
 
       ChattingClient client = new ChattingClient();
-      client.connect("127.0.0.1", 1200);
+      client.connect("10.80.163.75", 1200);
       client.prepareTalking();
       client.startTalking();
     } catch (Exception e) {

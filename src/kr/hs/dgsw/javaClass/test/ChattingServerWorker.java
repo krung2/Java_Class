@@ -24,6 +24,7 @@ public class ChattingServerWorker extends SocketWorker {
     if (length < 0) disconnect();
 
     Message message = new Message(buffer, length);
+    System.out.println(message.getCommand().toString() + message.getPayloadLength() + message.getReceiveMessage());
 
     switch (message.getCommand()) {
       case ID:
@@ -54,14 +55,23 @@ public class ChattingServerWorker extends SocketWorker {
     for (ChattingServerWorker user: userList) {
       if (user.id == null) continue;
       if (user.id.equals(this.id)) continue;
-      user.socket.getOutputStream().write(message.getBytes(StandardCharsets.UTF_8));
+      try {
+        user.socket.getOutputStream().write(message.getBytes(StandardCharsets.UTF_8));
+      } catch (Exception e) {
+        continue;
+      }
     }
   }
 
   private void sendMessageToOne (String userId, String message) throws IOException {
     for (ChattingServerWorker user: userList) {
+      if (user.id == null) break;
       if (user.id.equals(userId)) {
-        user.socket.getOutputStream().write(message.getBytes(StandardCharsets.UTF_8));
+        try {
+          user.socket.getOutputStream().write(message.getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
+          continue;
+        }
         break;
       }
     }
